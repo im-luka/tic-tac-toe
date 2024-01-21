@@ -6,6 +6,7 @@ import { Notifications } from "@mantine/notifications";
 import { colors } from "./colors";
 import { typography } from "./typography";
 import { spacing } from "./spacing";
+import { components } from "./components";
 
 type Props = {
   children: ReactNode;
@@ -15,6 +16,7 @@ const theme = createTheme({
   ...colors,
   ...typography,
   spacing,
+  components,
 });
 
 export const ThemeProvider: FC<Props> = ({ children }) => {
