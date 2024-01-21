@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
+import { ColorSchemeScript } from "@mantine/core";
 import { Providers } from "../_components/providers";
 
 type Params = { locale: string };
@@ -43,6 +44,9 @@ export async function generateMetadata({
 export default function RootLayout({ children, params: { locale } }: Props) {
   return (
     <html lang={locale}>
+      <head>
+        <ColorSchemeScript />
+      </head>
       <body>
         <Providers locale={locale}>{children}</Providers>
       </body>
