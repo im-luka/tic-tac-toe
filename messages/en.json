@@ -1,3 +1,8 @@
 {
-  "appName": "Tic Tac Toe"
+  "appName": "Tic Tac Toe",
+  "metadata": {
+    "title": "3T - Tic Tac Toe",
+    "template": "%s | 3T",
+    "description": "Play Tic-Tac-Toe online! Challenge friends or the computer in this classic game with a sleek and intuitive web app interface. Simple fun, anytime, anywhere!"
+  }
 }
