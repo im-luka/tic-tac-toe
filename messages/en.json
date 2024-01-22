@@ -4,5 +4,20 @@
     "title": "3T - Tic Tac Toe",
     "template": "%s | 3T",
     "description": "Play Tic-Tac-Toe online! Challenge friends or the computer in this classic game with a sleek and intuitive web app interface. Simple fun, anytime, anywhere!"
+  },
+  "validation": {
+    "required": "Required"
+  },
+  "login": {
+    "title": "Login",
+    "form": {
+      "title": "Welcome back to <s>3T - Tic Tac Toe</s>",
+      "usernameLabel": "Username",
+      "usernamePlaceholder": "John Doe",
+      "passwordLabel": "Password",
+      "passwordPlaceholder": "xxxxx",
+      "submitAction": "Login"
+    },
+    "createAccountLink": "Don't have an account? <link>Create one.</link>"
   }
 }
