@@ -10,13 +10,15 @@ import { FormTextInput } from "../base/text-input";
 import { Link } from "../base/link";
 import { paths } from "@/navigation/paths";
 
-export const LoginForm: FC = () => {
-  const { t, loginForm } = useLoginForm();
+export const RegisterForm: FC = () => {
+  const { t, registerForm } = useRegisterForm();
 
   return (
     <Card maw={600} p="xl">
-      <FormProvider {...loginForm}>
-        <form onSubmit={loginForm.handleSubmit(() => console.log("submitted"))}>
+      <FormProvider {...registerForm}>
+        <form
+          onSubmit={registerForm.handleSubmit(() => console.log("registered"))}
+        >
           <Stack>
             <Title order={3} ta="center">
               {t.rich("form.title", {
@@ -41,13 +43,20 @@ export const LoginForm: FC = () => {
                 placeholder={t("form.passwordPlaceholder")}
                 withAsterisk
               />
+              <FormTextInput
+                name="confirmPassword"
+                type="password"
+                label={t("form.confirmPasswordLabel")}
+                placeholder={t("form.confirmPasswordPlaceholder")}
+                withAsterisk
+              />
             </Stack>
             <Stack gap="sm">
               <Button type="submit">{t("form.submitAction")}</Button>
               <Text size="xs" ta="center">
-                {t.rich("createAccountLink", {
+                {t.rich("haveAccountLink", {
                   link: (chunk) => (
-                    <Link href={paths.register()} c="blue">
+                    <Link href={paths.login()} c="blue">
                       {chunk}
                     </Link>
                   ),
@@ -61,24 +70,41 @@ export const LoginForm: FC = () => {
   );
 };
 
-function useLoginForm() {
-  const t = useTranslations("login");
+function useRegisterForm() {
+  const t = useTranslations("register");
 
   const tValidation = useTranslations("validation");
-  const loginForm = useForm<LoginFormValues>({
-    resolver: zodResolver(loginSchema(tValidation("required"))),
+  const registerForm = useForm<RegisterFormValues>({
+    resolver: zodResolver(
+      registerSchema(
+        tValidation("required"),
+        tValidation("minPassword"),
+        tValidation("confirmPassword")
+      )
+    ),
     defaultValues: {
       username: "",
       password: "",
+      confirmPassword: "",
     },
   });
 
-  return { t, loginForm };
+  return { t, registerForm };
 }
 
-type LoginFormValues = z.infer<ReturnType<typeof loginSchema>>;
-const loginSchema = (required: string) =>
-  z.object({
-    username: z.string().min(1, required),
-    password: z.string().min(1, required),
-  });
+type RegisterFormValues = z.infer<ReturnType<typeof registerSchema>>;
+const registerSchema = (
+  required: string,
+  minPassword: string,
+  confirmPassword: string
+) =>
+  z
+    .object({
+      username: z.string().min(1, required),
+      password: z.string().min(1, required).min(8, minPassword),
+      confirmPassword: z.string(),
+    })
+    .refine(({ confirmPassword, password }) => confirmPassword === password, {
+      message: confirmPassword,
+      path: ["confirmPassword"],
+    });

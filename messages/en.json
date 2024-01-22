@@ -6,7 +6,9 @@
     "description": "Play Tic-Tac-Toe online! Challenge friends or the computer in this classic game with a sleek and intuitive web app interface. Simple fun, anytime, anywhere!"
   },
   "validation": {
-    "required": "Required"
+    "required": "Required",
+    "minPassword": "Password must include 8 characters",
+    "confirmPassword": "Password doesn't match"
   },
   "login": {
     "title": "Login",
@@ -19,5 +21,19 @@
       "submitAction": "Login"
     },
     "createAccountLink": "Don't have an account? <link>Create one.</link>"
+  },
+  "register": {
+    "title": "Register",
+    "form": {
+      "title": "Get started with <s>3T - Tic Tac Toe</s>",
+      "usernameLabel": "Username",
+      "usernamePlaceholder": "John Doe",
+      "passwordLabel": "Password",
+      "passwordPlaceholder": "xxxxx",
+      "confirmPasswordLabel": "Confirm password",
+      "confirmPasswordPlaceholder": "xxxxx",
+      "submitAction": "Register"
+    },
+    "haveAccountLink": "Already have an account? <link>Login now.</link>"
   }
 }
