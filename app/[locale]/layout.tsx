@@ -45,7 +45,7 @@ export default function RootLayout({ children, params: { locale } }: Props) {
   return (
     <html lang={locale}>
       <head>
-        <ColorSchemeScript />
+        <ColorSchemeScript defaultColorScheme="dark" />
       </head>
       <body>
         <Providers locale={locale}>
