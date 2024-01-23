@@ -8,7 +8,7 @@ type Props = {
 
 export default function HomeLayout({ children }: Props) {
   return (
-    <Box w="100%" style={{ border: "1px solid red" }}>
+    <Box w="100%">
       <Navbar />
       {children}
     </Box>

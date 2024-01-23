@@ -2,17 +2,27 @@
 
 import { FC } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { Center } from "@mantine/core";
+import { Stack } from "@mantine/core";
+import { gamesQuery } from "@/domain/queries/games-query";
+import { GameList } from "@/types/game-list";
+import { GamesTable } from "../games/games-table";
 
 export const HomeClient: FC = () => {
-  const { data: games } = useQuery({
-    queryKey: ["games/"],
-  });
-  console.log(games);
+  const { results } = useHomeClient();
 
   return (
-    <Center h="100%">
-      <h1>Home Screen</h1>
-    </Center>
+    <Stack p="md">
+      <GamesTable results={results} />
+    </Stack>
   );
 };
+
+function useHomeClient() {
+  const { data: games } = useQuery<GameList>({
+    queryKey: gamesQuery.key,
+  });
+
+  return {
+    results: games?.results ?? [],
+  };
+}

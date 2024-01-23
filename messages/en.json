@@ -53,5 +53,19 @@
       "submitAction": "Register"
     },
     "haveAccountLink": "Already have an account? <link>Login now.</link>"
+  },
+  "home": {
+    "table": {
+      "head": {
+        "started": "Started",
+        "status": "Status",
+        "player1": "Player 01",
+        "player2": "Player 02",
+        "winner": "Winner"
+      },
+      "body": {
+        "joinAction": "Join"
+      }
+    }
   }
 }
