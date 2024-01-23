@@ -15,7 +15,7 @@ export const RegisterClient: FC = () => {
 };
 
 function useRegisterClient() {
-  const onSuccess = useNotificationSuccess("registered");
+  const onSuccess = useNotificationSuccess("register");
   const { replace } = useRouter();
 
   const { mutateAsync: register } = useMutation({
