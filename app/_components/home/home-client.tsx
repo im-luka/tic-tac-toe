@@ -14,6 +14,7 @@ export const HomeClient: FC = () => {
   const { data: games } = useQuery({
     queryKey: ["games/"],
   });
+  console.log(games);
 
   const { mutateAsync: logout, isPending } = useMutation({
     mutationFn: logoutMutation.fnc,

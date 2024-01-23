@@ -6,5 +6,5 @@ type Props = {
 };
 
 export default function AuthLayout({ children }: Props) {
-  return <Center h="100vh">{children}</Center>;
+  return <Center w="100%">{children}</Center>;
 }
