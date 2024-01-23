@@ -10,10 +10,12 @@ export const useNotificationError = () => {
   const getMessage = (error: Error) => {
     let message;
     if (isAxiosError(error)) {
-      message = error.response?.data.message;
+      const errorData = error.response?.data;
+      message = errorData?.errors?.[0].message ?? errorData?.message;
     } else if (error instanceof Error) {
       message = error.message;
-    } else {
+    }
+    if (!message) {
       message = t("somethingWentWrong");
     }
     return message;

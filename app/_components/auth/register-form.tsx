@@ -10,15 +10,17 @@ import { FormTextInput } from "../base/text-input";
 import { Link } from "../base/link";
 import { paths } from "@/navigation/paths";
 
-export const RegisterForm: FC = () => {
-  const { t, registerForm } = useRegisterForm();
+type Props = {
+  onSubmit: (values: RegisterFormValues) => Promise<void>;
+};
+
+export const RegisterForm: FC<Props> = (props) => {
+  const { t, registerForm, isSubmitting, onSubmit } = useRegisterForm(props);
 
   return (
     <Card maw={600} p="xl">
       <FormProvider {...registerForm}>
-        <form
-          onSubmit={registerForm.handleSubmit(() => console.log("registered"))}
-        >
+        <form onSubmit={onSubmit}>
           <Stack>
             <Title order={3} ta="center">
               {t.rich("form.title", {
@@ -52,7 +54,9 @@ export const RegisterForm: FC = () => {
               />
             </Stack>
             <Stack gap="sm">
-              <Button type="submit">{t("form.submitAction")}</Button>
+              <Button type="submit" loading={isSubmitting}>
+                {t("form.submitAction")}
+              </Button>
               <Text size="xs" ta="center">
                 {t.rich("haveAccountLink", {
                   link: (chunk) => (
@@ -70,7 +74,7 @@ export const RegisterForm: FC = () => {
   );
 };
 
-function useRegisterForm() {
+function useRegisterForm({ onSubmit }: Props) {
   const t = useTranslations("register");
 
   const tValidation = useTranslations("validation");
@@ -88,11 +92,20 @@ function useRegisterForm() {
       confirmPassword: "",
     },
   });
+  const {
+    handleSubmit,
+    formState: { isSubmitting },
+  } = registerForm;
 
-  return { t, registerForm };
+  return {
+    t,
+    registerForm,
+    isSubmitting,
+    onSubmit: handleSubmit(onSubmit),
+  };
 }
 
-type RegisterFormValues = z.infer<ReturnType<typeof registerSchema>>;
+export type RegisterFormValues = z.infer<ReturnType<typeof registerSchema>>;
 const registerSchema = (
   required: string,
   minPassword: string,

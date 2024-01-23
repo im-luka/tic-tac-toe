@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
-import { RegisterForm } from "@/app/_components/auth/register-form";
+import { RegisterClient } from "@/app/_components/auth/register-client";
 
 type Params = { locale: string };
 
@@ -16,5 +16,5 @@ export async function generateMetadata({
 }
 
 export default function RegisterPage() {
-  return <RegisterForm />;
+  return <RegisterClient />;
 }

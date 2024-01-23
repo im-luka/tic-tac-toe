@@ -11,7 +11,9 @@
     "confirmPassword": "Password doesn't match"
   },
   "notification": {
-    "success": {},
+    "success": {
+      "registered": "Registered! Login now."
+    },
     "error": {
       "somethingWentWrong": "Something went wrong"
     }
