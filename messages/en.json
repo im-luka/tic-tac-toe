@@ -19,6 +19,15 @@
       "somethingWentWrong": "Something went wrong"
     }
   },
+  "component": {
+    "navbar": {
+      "logoAlt": "3T - Tic Tac Toe logo",
+      "title": "3T - Tic Tac Toe"
+    },
+    "logoutButton": {
+      "label": "Logout"
+    }
+  },
   "login": {
     "title": "Login",
     "form": {
