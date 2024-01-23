@@ -4,5 +4,45 @@
     "title": "3T - Tic Tac Toe",
     "template": "%s | 3T",
     "description": "Play Tic-Tac-Toe online! Challenge friends or the computer in this classic game with a sleek and intuitive web app interface. Simple fun, anytime, anywhere!"
+  },
+  "validation": {
+    "required": "Required",
+    "minPassword": "Password must include 8 characters",
+    "confirmPassword": "Password doesn't match"
+  },
+  "notification": {
+    "success": {
+      "register": "Registered! Login now.",
+      "login": "Successfully logged in!"
+    },
+    "error": {
+      "somethingWentWrong": "Something went wrong"
+    }
+  },
+  "login": {
+    "title": "Login",
+    "form": {
+      "title": "Welcome back to <s>3T - Tic Tac Toe</s>",
+      "usernameLabel": "Username",
+      "usernamePlaceholder": "John Doe",
+      "passwordLabel": "Password",
+      "passwordPlaceholder": "xxxxx",
+      "submitAction": "Login"
+    },
+    "createAccountLink": "Don't have an account? <link>Create one.</link>"
+  },
+  "register": {
+    "title": "Register",
+    "form": {
+      "title": "Get started with <s>3T - Tic Tac Toe</s>",
+      "usernameLabel": "Username",
+      "usernamePlaceholder": "John Doe",
+      "passwordLabel": "Password",
+      "passwordPlaceholder": "xxxxx",
+      "confirmPasswordLabel": "Confirm password",
+      "confirmPasswordPlaceholder": "xxxxx",
+      "submitAction": "Register"
+    },
+    "haveAccountLink": "Already have an account? <link>Login now.</link>"
   }
 }
