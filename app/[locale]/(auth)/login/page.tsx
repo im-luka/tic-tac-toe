@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { LoginClient } from "@/app/_components/auth/login-client";
+import { withPublicOnlyPage } from "@/app/_hoc/with-public-only-page";
 
 type Params = { locale: string };
 
@@ -15,6 +16,8 @@ export async function generateMetadata({
   };
 }
 
-export default function LoginPage() {
+function LoginPage() {
   return <LoginClient />;
 }
+
+export default withPublicOnlyPage(LoginPage);
