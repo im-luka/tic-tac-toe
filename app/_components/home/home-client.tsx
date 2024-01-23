@@ -3,18 +3,28 @@
 import { FC } from "react";
 import { signOut, useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { Box, Button, Stack, Title } from "@mantine/core";
+import { logoutMutation } from "@/domain/mutations/logout-mutation";
 
 export const HomeClient: FC = () => {
   const t = useTranslations();
   const { data } = useSession();
-  console.log(data);
 
   const { data: games } = useQuery({
     queryKey: ["games/"],
   });
-  console.log(games);
+
+  const { mutateAsync: logout, isPending } = useMutation({
+    mutationFn: logoutMutation.fnc,
+  });
+
+  const handleLogout = async () => {
+    const response = await logout();
+    if (response) {
+      await signOut();
+    }
+  };
 
   return (
     <Stack>
@@ -22,11 +32,7 @@ export const HomeClient: FC = () => {
         <Title>{t("appName")}</Title>
       </Box>
       {data?.user && (
-        <Button
-          onClick={async () => {
-            signOut();
-          }}
-        >
+        <Button onClick={handleLogout} loading={isPending}>
           Log out
         </Button>
       )}
