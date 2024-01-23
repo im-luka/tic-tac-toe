@@ -10,13 +10,17 @@ import { FormTextInput } from "../base/text-input";
 import { Link } from "../base/link";
 import { paths } from "@/navigation/paths";
 
-export const LoginForm: FC = () => {
-  const { t, loginForm } = useLoginForm();
+type Props = {
+  onSubmit: (values: LoginFormValues) => Promise<void>;
+};
+
+export const LoginForm: FC<Props> = (props) => {
+  const { t, loginForm, isSubmitting, onSubmit } = useLoginForm(props);
 
   return (
     <Card maw={600} p="xl">
       <FormProvider {...loginForm}>
-        <form onSubmit={loginForm.handleSubmit(() => console.log("submitted"))}>
+        <form onSubmit={onSubmit}>
           <Stack>
             <Title order={3} ta="center">
               {t.rich("form.title", {
@@ -43,7 +47,9 @@ export const LoginForm: FC = () => {
               />
             </Stack>
             <Stack gap="sm">
-              <Button type="submit">{t("form.submitAction")}</Button>
+              <Button type="submit" loading={isSubmitting}>
+                {t("form.submitAction")}
+              </Button>
               <Text size="xs" ta="center">
                 {t.rich("createAccountLink", {
                   link: (chunk) => (
@@ -61,7 +67,7 @@ export const LoginForm: FC = () => {
   );
 };
 
-function useLoginForm() {
+function useLoginForm({ onSubmit }: Props) {
   const t = useTranslations("login");
 
   const tValidation = useTranslations("validation");
@@ -72,11 +78,20 @@ function useLoginForm() {
       password: "",
     },
   });
+  const {
+    handleSubmit,
+    formState: { isSubmitting },
+  } = loginForm;
 
-  return { t, loginForm };
+  return {
+    t,
+    loginForm,
+    isSubmitting,
+    onSubmit: handleSubmit(onSubmit),
+  };
 }
 
-type LoginFormValues = z.infer<ReturnType<typeof loginSchema>>;
+export type LoginFormValues = z.infer<ReturnType<typeof loginSchema>>;
 const loginSchema = (required: string) =>
   z.object({
     username: z.string().min(1, required),

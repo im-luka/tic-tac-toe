@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
-import { LoginForm } from "@/app/_components/auth/login-form";
+import { LoginClient } from "@/app/_components/auth/login-client";
 
 type Params = { locale: string };
 
@@ -16,5 +16,5 @@ export async function generateMetadata({
 }
 
 export default function LoginPage() {
-  return <LoginForm />;
+  return <LoginClient />;
 }

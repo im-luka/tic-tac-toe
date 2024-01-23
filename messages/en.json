@@ -12,7 +12,8 @@
   },
   "notification": {
     "success": {
-      "register": "Registered! Login now."
+      "register": "Registered! Login now.",
+      "login": "Successfully logged in!"
     },
     "error": {
       "somethingWentWrong": "Something went wrong"

@@ -1,8 +1,10 @@
 import type { ReactNode } from "react";
 import type { Metadata } from "next";
+import { getServerSession } from "next-auth";
 import { getTranslations } from "next-intl/server";
 import { ColorSchemeScript } from "@mantine/core";
 import { Providers } from "../_components/providers";
+import { authOptions } from "@/domain/auth";
 
 type Params = { locale: string };
 type Props = {
@@ -41,14 +43,19 @@ export async function generateMetadata({
   };
 }
 
-export default function RootLayout({ children, params: { locale } }: Props) {
+export default async function RootLayout({
+  children,
+  params: { locale },
+}: Props) {
+  const session = await getServerSession(authOptions);
+
   return (
     <html lang={locale}>
       <head>
         <ColorSchemeScript defaultColorScheme="dark" />
       </head>
       <body>
-        <Providers locale={locale}>
+        <Providers locale={locale} session={session}>
           <main className="main-layout">{children}</main>
         </Providers>
       </body>
