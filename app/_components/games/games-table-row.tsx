@@ -1,4 +1,5 @@
 import { FC, useCallback } from "react";
+import { useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
 import {
   Badge,
@@ -52,8 +53,10 @@ export const GamesTableRow: FC<Props> = (props) => {
 
 function useGamesTableRow({ item }: Props) {
   const t = useTranslations("home.table.body");
+  const { data } = useSession();
 
-  const disableJoin = item.status !== GameStatus.Open;
+  const disableJoin =
+    item.status !== GameStatus.Open || item.first_player.id === data?.user?.id;
 
   const generateBadgeColor = useCallback(
     (status: GameStatus): DefaultMantineColor => {
