@@ -20,6 +20,13 @@
       "somethingWentWrong": "Something went wrong"
     }
   },
+  "shared": {
+    "error": {
+      "label": "Something bad happened...",
+      "homeAction": "Go Home",
+      "tryAgainAction": "Try Again"
+    }
+  },
   "component": {
     "navbar": {
       "logoAlt": "3T - Tic Tac Toe logo",
@@ -72,5 +79,8 @@
         "joinAction": "Join"
       }
     }
+  },
+  "game": {
+    "backAction": "Go Back"
   }
 }

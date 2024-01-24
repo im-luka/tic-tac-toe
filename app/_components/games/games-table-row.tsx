@@ -12,14 +12,22 @@ import {
 import { IconDice, IconTrophy, IconX } from "@tabler/icons-react";
 import { Game, GameStatus } from "@/types/game";
 import { formatDate } from "@/util/date";
+import { useRouter } from "@/navigation";
+import { paths } from "@/navigation/paths";
 
 type Props = {
   item: Game;
 };
 
 export const GamesTableRow: FC<Props> = (props) => {
-  const { t, item, disableJoin, generateBadgeColor, generateUserLabel } =
-    useGamesTableRow(props);
+  const {
+    t,
+    item,
+    disableJoin,
+    generateBadgeColor,
+    generateUserLabel,
+    handleNavigation,
+  } = useGamesTableRow(props);
 
   return (
     <Table.Tr>
@@ -45,7 +53,9 @@ export const GamesTableRow: FC<Props> = (props) => {
       </Table.Td>
       <Table.Td>{generateUserLabel(item.winner?.username, "winner")}</Table.Td>
       <Table.Td>
-        <Button disabled={disableJoin}>{t("joinAction")}</Button>
+        <Button disabled={disableJoin} onClick={handleNavigation}>
+          {t("joinAction")}
+        </Button>
       </Table.Td>
     </Table.Tr>
   );
@@ -54,6 +64,7 @@ export const GamesTableRow: FC<Props> = (props) => {
 function useGamesTableRow({ item }: Props) {
   const t = useTranslations("home.table.body");
   const { data } = useSession();
+  const { push } = useRouter();
 
   const disableJoin =
     item.status !== GameStatus.Open || item.first_player.id === data?.user?.id;
@@ -95,5 +106,16 @@ function useGamesTableRow({ item }: Props) {
     []
   );
 
-  return { t, item, disableJoin, generateBadgeColor, generateUserLabel };
+  const handleNavigation = () => {
+    push(paths.game(item.id));
+  };
+
+  return {
+    t,
+    item,
+    disableJoin,
+    generateBadgeColor,
+    generateUserLabel,
+    handleNavigation,
+  };
 }

@@ -1,7 +1,7 @@
 import { stringify } from "querystring";
 import { omitBy, isNil } from "lodash";
 
-const GAMES_QUERY_KEY = "games";
+export const GAMES_QUERY_KEY = "games";
 
 export const gamesQuerySearchParams = {
   limit: "limit",
