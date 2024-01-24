@@ -55,6 +55,10 @@
     "haveAccountLink": "Already have an account? <link>Login now.</link>"
   },
   "home": {
+    "newAction": "Add New",
+    "pagination": {
+      "perPageLabel": "Per page:"
+    },
     "table": {
       "head": {
         "started": "Started",

@@ -9,8 +9,8 @@ export const getQueryClient = cache(
       defaultOptions: {
         queries: {
           queryFn: async ({ queryKey }) => {
-            const [path, params] = queryKey as [string, unknown];
-            return getAxiosData(await remoteApi.get(path, { params }));
+            const [path, params] = queryKey as [string, string];
+            return getAxiosData(await remoteApi.get(`${path}/${params ?? ""}`));
           },
         },
       },

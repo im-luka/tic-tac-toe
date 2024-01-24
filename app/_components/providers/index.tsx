@@ -5,6 +5,7 @@ import { ThemeProvider } from "./theme";
 import { QueryClientProvider } from "./query-client";
 import { getCurrentTimezone } from "@/util/date";
 import { SessionProvider } from "./session";
+import { remoteApi } from "@/domain/remote";
 
 type Props = {
   locale: string;
@@ -14,6 +15,13 @@ type Props = {
 
 export const Providers: FC<Props> = ({ locale, session, children }) => {
   const messages = useMessages();
+
+  if (session?.token) {
+    remoteApi.interceptors.request.use((config) => {
+      config.headers["Authorization"] = `Bearer ${session.token}`;
+      return config;
+    });
+  }
 
   return (
     <NextIntlClientProvider
