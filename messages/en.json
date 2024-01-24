@@ -13,10 +13,20 @@
   "notification": {
     "success": {
       "register": "Registered! Login now.",
-      "login": "Successfully logged in!"
+      "login": "Successfully logged in!",
+      "createGame": "New game created!"
     },
     "error": {
       "somethingWentWrong": "Something went wrong"
+    }
+  },
+  "component": {
+    "navbar": {
+      "logoAlt": "3T - Tic Tac Toe logo",
+      "title": "3T - Tic Tac Toe"
+    },
+    "logoutButton": {
+      "label": "Logout"
     }
   },
   "login": {
@@ -44,5 +54,23 @@
       "submitAction": "Register"
     },
     "haveAccountLink": "Already have an account? <link>Login now.</link>"
+  },
+  "home": {
+    "newAction": "Add New",
+    "pagination": {
+      "perPageLabel": "Per page:"
+    },
+    "table": {
+      "head": {
+        "started": "Started",
+        "status": "Status",
+        "player1": "Player 01",
+        "player2": "Player 02",
+        "winner": "Winner"
+      },
+      "body": {
+        "joinAction": "Join"
+      }
+    }
   }
 }
