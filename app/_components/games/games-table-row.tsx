@@ -1,4 +1,4 @@
-import { FC, useCallback } from "react";
+import { FC, useCallback, useState } from "react";
 import { useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
 import {
@@ -12,11 +12,11 @@ import {
 import { IconDice, IconTrophy, IconX } from "@tabler/icons-react";
 import { Game, GameStatus } from "@/types/game";
 import { formatDate } from "@/util/date";
-import { useRouter } from "@/navigation";
-import { paths } from "@/navigation/paths";
 
 type Props = {
   item: Game;
+  isJoiningGame: boolean;
+  onJoinGame: (id: number) => Promise<void>;
 };
 
 export const GamesTableRow: FC<Props> = (props) => {
@@ -24,9 +24,10 @@ export const GamesTableRow: FC<Props> = (props) => {
     t,
     item,
     disableJoin,
+    loading,
     generateBadgeColor,
     generateUserLabel,
-    handleNavigation,
+    handleJoinGame,
   } = useGamesTableRow(props);
 
   return (
@@ -53,7 +54,11 @@ export const GamesTableRow: FC<Props> = (props) => {
       </Table.Td>
       <Table.Td>{generateUserLabel(item.winner?.username, "winner")}</Table.Td>
       <Table.Td>
-        <Button disabled={disableJoin} onClick={handleNavigation}>
+        <Button
+          disabled={disableJoin}
+          loading={loading}
+          onClick={handleJoinGame}
+        >
           {t("joinAction")}
         </Button>
       </Table.Td>
@@ -61,10 +66,10 @@ export const GamesTableRow: FC<Props> = (props) => {
   );
 };
 
-function useGamesTableRow({ item }: Props) {
+function useGamesTableRow({ item, isJoiningGame, onJoinGame }: Props) {
   const t = useTranslations("home.table.body");
   const { data } = useSession();
-  const { push } = useRouter();
+  const [clicked, setClicked] = useState(false);
 
   const disableJoin =
     item.status !== GameStatus.Open || item.first_player.id === data?.user?.id;
@@ -106,16 +111,18 @@ function useGamesTableRow({ item }: Props) {
     []
   );
 
-  const handleNavigation = () => {
-    push(paths.game(item.id));
+  const handleJoinGame = async () => {
+    setClicked(true);
+    await onJoinGame(item.id);
   };
 
   return {
     t,
     item,
     disableJoin,
+    loading: isJoiningGame && clicked,
     generateBadgeColor,
     generateUserLabel,
-    handleNavigation,
+    handleJoinGame,
   };
 }

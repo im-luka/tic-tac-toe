@@ -6,16 +6,26 @@ import { Game } from "@/types/game";
 
 type Props = {
   results: Game[];
+  isJoiningGame: boolean;
+  onJoinGame: (id: number) => Promise<void>;
 };
 
 export const GamesTable: FC<Props> = (props) => {
-  const { results, headLabels } = useGamesTable(props);
+  const { results, isJoiningGame, headLabels, onJoinGame } =
+    useGamesTable(props);
 
   const renderHeadLabel = (label: string, index: number) => (
     <Table.Th key={index}>{label}</Table.Th>
   );
 
-  const renderRow = (item: Game) => <GamesTableRow key={item.id} item={item} />;
+  const renderRow = (item: Game) => (
+    <GamesTableRow
+      key={item.id}
+      item={item}
+      isJoiningGame={isJoiningGame}
+      onJoinGame={onJoinGame}
+    />
+  );
 
   return (
     <Table
@@ -37,7 +47,7 @@ export const GamesTable: FC<Props> = (props) => {
   );
 };
 
-function useGamesTable({ results }: Props) {
+function useGamesTable({ results, isJoiningGame, onJoinGame }: Props) {
   const t = useTranslations("home.table");
 
   const headLabels = [
@@ -49,5 +59,5 @@ function useGamesTable({ results }: Props) {
     "",
   ];
 
-  return { results, headLabels };
+  return { results, isJoiningGame, headLabels, onJoinGame };
 }

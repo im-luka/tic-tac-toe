@@ -10,16 +10,26 @@ import {
   gamesQuery,
   gamesQuerySearchParams,
 } from "@/domain/queries/games-query";
+import { useRouter } from "@/navigation";
 import { GameList } from "@/types/game-list";
 import { GamesTable } from "../games/games-table";
 import { GAMES_PER_PAGE_DEFAULT_OPTION } from "@/util/constants";
 import { GamesPagination } from "../games/games-pagination";
 import { createGameMutation } from "@/domain/mutations/create-game-mutation";
 import { useNotificationSuccess } from "@/hooks/use-notification-success";
+import { joinGameMutation } from "@/domain/mutations/join-game-mutation";
+import { paths } from "@/navigation/paths";
 
 export const HomeClient: FC = () => {
-  const { t, results, total, isCreatingGame, handleCreateGame } =
-    useHomeClient();
+  const {
+    t,
+    results,
+    total,
+    isCreatingGame,
+    isJoiningGame,
+    handleCreateGame,
+    handleJoinGame,
+  } = useHomeClient();
 
   return (
     <Stack p="md">
@@ -34,7 +44,11 @@ export const HomeClient: FC = () => {
         </Button>
         <GamesPagination total={total} />
       </Group>
-      <GamesTable results={results} />
+      <GamesTable
+        results={results}
+        isJoiningGame={isJoiningGame}
+        onJoinGame={handleJoinGame}
+      />
     </Stack>
   );
 };
@@ -42,6 +56,8 @@ export const HomeClient: FC = () => {
 function useHomeClient() {
   const t = useTranslations("home");
   const onSuccess = useNotificationSuccess("createGame");
+  const onJoin = useNotificationSuccess("joinGame");
+  const { push } = useRouter();
 
   const searchParams = useSearchParams();
   const limit =
@@ -61,8 +77,20 @@ function useHomeClient() {
     },
   });
 
+  const { mutateAsync: joinGame, isPending: isJoiningGame } = useMutation({
+    mutationFn: joinGameMutation.fnc,
+    onSuccess: (_, id) => {
+      push(paths.game(id));
+      onJoin();
+    },
+  });
+
   const handleCreateGame = async () => {
     await createGame().catch(() => null);
+  };
+
+  const handleJoinGame = async (id: number) => {
+    await joinGame(id).catch(() => null);
   };
 
   return {
@@ -70,6 +98,8 @@ function useHomeClient() {
     results: games?.results ?? [],
     total: Math.ceil((games?.count ?? 1) / +limit),
     isCreatingGame,
+    isJoiningGame,
     handleCreateGame,
+    handleJoinGame,
   };
 }

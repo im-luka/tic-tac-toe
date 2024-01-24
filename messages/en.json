@@ -14,7 +14,8 @@
     "success": {
       "register": "Registered! Login now.",
       "login": "Successfully logged in!",
-      "createGame": "New game created!"
+      "createGame": "New game created!",
+      "joinGame": "Game joined!"
     },
     "error": {
       "somethingWentWrong": "Something went wrong"
