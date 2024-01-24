@@ -53,7 +53,7 @@ export const GamesTableRow: FC<Props> = (props) => {
 function useGamesTableRow({ item }: Props) {
   const t = useTranslations("home.table.body");
 
-  const disableJoin = item.status === GameStatus.Finished;
+  const disableJoin = item.status !== GameStatus.Open;
 
   const generateBadgeColor = useCallback(
     (status: GameStatus): DefaultMantineColor => {
