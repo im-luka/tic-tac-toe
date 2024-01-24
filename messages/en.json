@@ -13,7 +13,8 @@
   "notification": {
     "success": {
       "register": "Registered! Login now.",
-      "login": "Successfully logged in!"
+      "login": "Successfully logged in!",
+      "createGame": "New game created!"
     },
     "error": {
       "somethingWentWrong": "Something went wrong"
