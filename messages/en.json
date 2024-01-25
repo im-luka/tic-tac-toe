@@ -31,10 +31,9 @@
   "component": {
     "navbar": {
       "logoAlt": "3T - Tic Tac Toe logo",
-      "title": "3T - Tic Tac Toe"
-    },
-    "logoutButton": {
-      "label": "Logout"
+      "title": "3T - Tic Tac Toe",
+      "welcomeMessage": "Welcome back, {username}!",
+      "logoutAction": "Logout"
     }
   },
   "login": {
