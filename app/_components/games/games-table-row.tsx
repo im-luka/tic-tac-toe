@@ -1,4 +1,5 @@
-import { FC, useCallback } from "react";
+import { FC, useCallback, useState } from "react";
+import { useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
 import {
   Badge,
@@ -9,16 +10,28 @@ import {
   Text,
 } from "@mantine/core";
 import { IconDice, IconTrophy, IconX } from "@tabler/icons-react";
+import { flatten, isNull, some } from "lodash";
+import { useRouter } from "@/navigation";
 import { Game, GameStatus } from "@/types/game";
 import { formatDate } from "@/util/date";
+import { paths } from "@/navigation/paths";
 
 type Props = {
   item: Game;
+  isJoiningGame: boolean;
+  onJoinGame: (id: number) => Promise<void>;
 };
 
 export const GamesTableRow: FC<Props> = (props) => {
-  const { t, item, disableJoin, generateBadgeColor, generateUserLabel } =
-    useGamesTableRow(props);
+  const {
+    item,
+    disableJoin,
+    actionLabel,
+    loading,
+    generateBadgeColor,
+    generateUserLabel,
+    handleJoinGame,
+  } = useGamesTableRow(props);
 
   return (
     <Table.Tr>
@@ -44,16 +57,35 @@ export const GamesTableRow: FC<Props> = (props) => {
       </Table.Td>
       <Table.Td>{generateUserLabel(item.winner?.username, "winner")}</Table.Td>
       <Table.Td>
-        <Button disabled={disableJoin}>{t("joinAction")}</Button>
+        <Button
+          disabled={disableJoin}
+          loading={loading}
+          fullWidth
+          onClick={handleJoinGame}
+        >
+          {actionLabel}
+        </Button>
       </Table.Td>
     </Table.Tr>
   );
 };
 
-function useGamesTableRow({ item }: Props) {
+function useGamesTableRow({ item, isJoiningGame, onJoinGame }: Props) {
   const t = useTranslations("home.table.body");
+  const [clicked, setClicked] = useState(false);
+  const { push } = useRouter();
+  const { data } = useSession();
+  const { id: userId } = data?.user ?? {};
 
-  const disableJoin = item.status === GameStatus.Finished;
+  const userPlaying =
+    item.first_player?.id === userId || item.second_player?.id === userId;
+  const disableJoin = item.status !== GameStatus.Open && !userPlaying;
+
+  const actionLabel = userPlaying
+    ? !!item.winner || !some(flatten(item.board), isNull)
+      ? t("inspectAction")
+      : t("continueAction")
+    : t("joinAction");
 
   const generateBadgeColor = useCallback(
     (status: GameStatus): DefaultMantineColor => {
@@ -92,5 +124,22 @@ function useGamesTableRow({ item }: Props) {
     []
   );
 
-  return { t, item, disableJoin, generateBadgeColor, generateUserLabel };
+  const handleJoinGame = async () => {
+    setClicked(true);
+    if (userPlaying) {
+      push(paths.game(item.id));
+    } else {
+      await onJoinGame(item.id);
+    }
+  };
+
+  return {
+    item,
+    disableJoin,
+    actionLabel,
+    loading: isJoiningGame && clicked,
+    generateBadgeColor,
+    generateUserLabel,
+    handleJoinGame,
+  };
 }

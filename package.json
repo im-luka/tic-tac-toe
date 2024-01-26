@@ -19,6 +19,7 @@
     "@tanstack/react-query-devtools": "^5.17.21",
     "@types/lodash": "^4.14.202",
     "axios": "^1.6.5",
+    "clsx": "^2.1.0",
     "dayjs": "^1.11.10",
     "lodash": "^4.17.21",
     "next": "14.1.0",

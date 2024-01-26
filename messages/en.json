@@ -14,19 +14,26 @@
     "success": {
       "register": "Registered! Login now.",
       "login": "Successfully logged in!",
-      "createGame": "New game created!"
+      "createGame": "New game created!",
+      "joinGame": "Game joined!"
     },
     "error": {
       "somethingWentWrong": "Something went wrong"
     }
   },
+  "shared": {
+    "error": {
+      "label": "Something bad happened...",
+      "homeAction": "Go Home",
+      "tryAgainAction": "Try Again"
+    }
+  },
   "component": {
     "navbar": {
       "logoAlt": "3T - Tic Tac Toe logo",
-      "title": "3T - Tic Tac Toe"
-    },
-    "logoutButton": {
-      "label": "Logout"
+      "title": "3T - Tic Tac Toe",
+      "welcomeMessage": "Welcome back, {username}!",
+      "logoutAction": "Logout"
     }
   },
   "login": {
@@ -69,8 +76,20 @@
         "winner": "Winner"
       },
       "body": {
-        "joinAction": "Join"
+        "draw": "Draw",
+        "joinAction": "Join",
+        "continueAction": "Continue",
+        "inspectAction": "Inspect"
       }
     }
+  },
+  "game": {
+    "backAction": "Go Back",
+    "vsLabel": "vs",
+    "vsEmptyPlaceholder": "...waiting player...",
+    "yourTurn": "Your turn",
+    "opponentTurn": "{name}'s turn",
+    "winnerLabel": "Winner: <s>{name}</s>",
+    "drawLabel": "It's a draw"
   }
 }

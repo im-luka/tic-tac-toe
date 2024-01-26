@@ -2,7 +2,7 @@ import { FC } from "react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { Group, Title } from "@mantine/core";
-import { LogoutButton } from "./logout-button";
+import { NavbarAuth } from "./navbar-auth";
 import logo from "@/public/logo.png";
 
 export const Navbar: FC = () => {
@@ -16,7 +16,7 @@ export const Navbar: FC = () => {
           {t("title")}
         </Title>
       </Group>
-      <LogoutButton />
+      <NavbarAuth />
     </Group>
   );
 };
