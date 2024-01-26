@@ -1,6 +1,6 @@
 import { User } from "./user";
 
-type GameUser = Pick<User, "id" | "username">;
+export type GameUser = Pick<User, "id" | "username">;
 
 export enum GameStatus {
   Open = "open",
@@ -10,7 +10,7 @@ export enum GameStatus {
 
 export type Game = {
   id: number;
-  board: number[];
+  board: (number | null)[][];
   winner: GameUser;
   first_player: GameUser;
   second_player: GameUser;

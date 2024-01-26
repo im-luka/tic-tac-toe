@@ -76,11 +76,20 @@
         "winner": "Winner"
       },
       "body": {
-        "joinAction": "Join"
+        "draw": "Draw",
+        "joinAction": "Join",
+        "continueAction": "Continue",
+        "inspectAction": "Inspect"
       }
     }
   },
   "game": {
-    "backAction": "Go Back"
+    "backAction": "Go Back",
+    "vsLabel": "vs",
+    "vsEmptyPlaceholder": "...waiting player...",
+    "yourTurn": "Your turn",
+    "opponentTurn": "{name}'s turn",
+    "winnerLabel": "Winner: <s>{name}</s>",
+    "drawLabel": "It's a draw"
   }
 }

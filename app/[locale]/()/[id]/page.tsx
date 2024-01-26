@@ -1,4 +1,3 @@
-import { notFound } from "next/navigation";
 import { HydrationBoundary, dehydrate } from "@tanstack/react-query";
 import { getQueryClient } from "@/domain/queries/server-query-client";
 import { GameClient } from "@/app/_components/game/game-client";
@@ -22,10 +21,7 @@ async function GamePage(props: Props) {
 
 async function useGamePage({ params: { id } }: Props) {
   const queryClient = getQueryClient();
-  const game = await queryClient.fetchQuery({ queryKey: gameQuery.key(id) });
-  if (!game) {
-    return notFound();
-  }
+  await queryClient.fetchQuery({ queryKey: gameQuery.key(id) });
   const dehydratedState = dehydrate(queryClient);
 
   return { id, dehydratedState };

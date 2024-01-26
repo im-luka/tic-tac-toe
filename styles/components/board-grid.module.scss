@@ -1,0 +1,24 @@
+.grid {
+  display: grid;
+  grid-template: repeat(3, 1fr) / repeat(3, 1fr);
+}
+
+.gridItem {
+  border-right: 5px solid var(--mantine-color-dark-9);
+  border-bottom: 5px solid var(--mantine-color-dark-9);
+  transition: background-color 400ms ease;
+  cursor: pointer;
+
+  &:nth-child(3n) {
+    border-right: 0;
+  }
+  &:nth-last-child(-n + 3) {
+    border-bottom: 0;
+  }
+}
+.gridItemHovered {
+  &:hover {
+    background-color: var(--mantine-color-dark-7);
+    transition: background-color 400ms ease;
+  }
+}

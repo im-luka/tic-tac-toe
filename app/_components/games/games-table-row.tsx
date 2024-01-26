@@ -10,8 +10,11 @@ import {
   Text,
 } from "@mantine/core";
 import { IconDice, IconTrophy, IconX } from "@tabler/icons-react";
+import { flatten, isNull, some } from "lodash";
+import { useRouter } from "@/navigation";
 import { Game, GameStatus } from "@/types/game";
 import { formatDate } from "@/util/date";
+import { paths } from "@/navigation/paths";
 
 type Props = {
   item: Game;
@@ -21,9 +24,9 @@ type Props = {
 
 export const GamesTableRow: FC<Props> = (props) => {
   const {
-    t,
     item,
     disableJoin,
+    actionLabel,
     loading,
     generateBadgeColor,
     generateUserLabel,
@@ -57,9 +60,10 @@ export const GamesTableRow: FC<Props> = (props) => {
         <Button
           disabled={disableJoin}
           loading={loading}
+          fullWidth
           onClick={handleJoinGame}
         >
-          {t("joinAction")}
+          {actionLabel}
         </Button>
       </Table.Td>
     </Table.Tr>
@@ -68,11 +72,20 @@ export const GamesTableRow: FC<Props> = (props) => {
 
 function useGamesTableRow({ item, isJoiningGame, onJoinGame }: Props) {
   const t = useTranslations("home.table.body");
-  const { data } = useSession();
   const [clicked, setClicked] = useState(false);
+  const { push } = useRouter();
+  const { data } = useSession();
+  const { id: userId } = data?.user ?? {};
 
-  const disableJoin =
-    item.status !== GameStatus.Open || item.first_player.id === data?.user?.id;
+  const userPlaying =
+    item.first_player?.id === userId || item.second_player?.id === userId;
+  const disableJoin = item.status !== GameStatus.Open && !userPlaying;
+
+  const actionLabel = userPlaying
+    ? !!item.winner || !some(flatten(item.board), isNull)
+      ? t("inspectAction")
+      : t("continueAction")
+    : t("joinAction");
 
   const generateBadgeColor = useCallback(
     (status: GameStatus): DefaultMantineColor => {
@@ -113,13 +126,17 @@ function useGamesTableRow({ item, isJoiningGame, onJoinGame }: Props) {
 
   const handleJoinGame = async () => {
     setClicked(true);
-    await onJoinGame(item.id);
+    if (userPlaying) {
+      push(paths.game(item.id));
+    } else {
+      await onJoinGame(item.id);
+    }
   };
 
   return {
-    t,
     item,
     disableJoin,
+    actionLabel,
     loading: isJoiningGame && clicked,
     generateBadgeColor,
     generateUserLabel,
