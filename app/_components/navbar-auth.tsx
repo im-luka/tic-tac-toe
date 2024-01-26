@@ -11,11 +11,13 @@ import { logoutMutation } from "@/domain/mutations/logout-mutation";
 export const NavbarAuth: FC = () => {
   const { t, username, isPending, handleLogout } = useNavbarAuth();
 
+  if (!username) {
+    return null;
+  }
+
   return (
     <Group>
-      {username && (
-        <Text fw="bold">{t.rich("welcomeMessage", { username })}</Text>
-      )}
+      <Text fw="bold">{t.rich("welcomeMessage", { username })}</Text>
       <Button
         color="red.8"
         loading={isPending}
