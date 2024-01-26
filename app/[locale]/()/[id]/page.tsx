@@ -21,7 +21,7 @@ async function GamePage(props: Props) {
 
 async function useGamePage({ params: { id } }: Props) {
   const queryClient = getQueryClient();
-  // await queryClient.fetchQuery({ queryKey: gameQuery.key(id) });
+  await queryClient.prefetchQuery({ queryKey: gameQuery.key(id) });
   const dehydratedState = dehydrate(queryClient);
 
   return { id, dehydratedState };
